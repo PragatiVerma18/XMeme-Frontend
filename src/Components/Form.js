@@ -20,11 +20,16 @@ function Form() {
   const submitForm = async (e) => {
     e.preventDefault();
     if (name && caption && url) {
-      await axios.post("https://xmeme-django.herokuapp.com/memes", {
-        name,
-        caption,
-        url,
-      });
+      await axios
+        .post("https://xmeme-django.herokuapp.com/memes/", {
+          name,
+          url,
+          caption,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+        });
 
       window.location.reload();
     }
@@ -102,7 +107,7 @@ function Form() {
         </div>
       </form>
       <hr></hr>
-      <div className="columns">
+      <div className="card-grid">
         {memesData.length ? (
           memesData.map((meme) => <Memes key={meme.id} data={meme} />)
         ) : (
