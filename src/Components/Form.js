@@ -13,7 +13,6 @@ function Form() {
   const [name, setName] = useState("");
   const [caption, setCaption] = useState("");
   const [url, setUrl] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
   const [memesData, setMemesData] = useState([]);
   const [formData, setFormData] = useReducer(formReducer, {});
   const [submitting, setSubmitting] = useState(false);
@@ -21,15 +20,12 @@ function Form() {
   const submitForm = async (e) => {
     e.preventDefault();
     if (name && caption && url) {
-      setIsDisabled(true);
-
       await axios.post("https://xmeme-django.herokuapp.com/memes", {
         name,
         caption,
         url,
       });
 
-      setIsDisabled(false);
       window.location.reload();
     }
   };
@@ -43,21 +39,6 @@ function Form() {
   useEffect(() => {
     getMemesData();
   }, []);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 3000);
-  };
-
-  const handleChange = (event) => {
-    setFormData({
-      name: event.target.name,
-      value: event.target.value,
-    });
-  };
 
   return (
     <>
@@ -114,7 +95,6 @@ function Form() {
             <button
               className="button has-background-info has-text-white"
               type="submit"
-              disabled={isDisabled}
             >
               Submit Meme
             </button>
@@ -122,12 +102,12 @@ function Form() {
         </div>
       </form>
       <hr></hr>
-      <div className="mt-6 justify-center flex flex-wrap">
+      <div className="columns">
         {memesData.length ? (
           memesData.map((meme) => <Memes key={meme.id} data={meme} />)
         ) : (
-          <h1 className="text-3xl mt-6 text-gray-800 m-auto">
-            No Memes available!
+          <h1 className="is-size-5 has-text-weight-bold has-text-danger has-text-center">
+            No Memes Available!
           </h1>
         )}
       </div>
