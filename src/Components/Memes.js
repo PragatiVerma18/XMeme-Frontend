@@ -7,7 +7,7 @@ function Memes({ data }) {
         className="box"
         style={{
           width: 400,
-          margin: "50px",
+          margin: "20px",
           padding: "20px",
         }}
       >
