@@ -36,7 +36,8 @@ function Form() {
 
   const getMemesData = async () => {
     const data = await axios.get("https://xmeme-django.herokuapp.com/memes");
-    setMemesData(data.data.memes);
+    console.log(data.data);
+    setMemesData(data.data);
   };
 
   useEffect(() => {
@@ -122,11 +123,8 @@ function Form() {
       </form>
       <hr></hr>
       <div className="mt-6 justify-center flex flex-wrap">
-        {console.log(memesData)}
         {memesData.length ? (
-          memesData.map((meme) => (
-            <Memes key={meme.id} data={JSON.parse(meme)} />
-          ))
+          memesData.map((meme) => <Memes key={meme.id} data={meme} />)
         ) : (
           <h1 className="text-3xl mt-6 text-gray-800 m-auto">
             No Memes available!
